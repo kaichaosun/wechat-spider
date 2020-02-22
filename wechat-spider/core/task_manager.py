@@ -81,6 +81,9 @@ class TaskManager():
 
             tasks = self._mysqldb.find(sql, to_json=True)
             if tasks:
+                log.info('==============account +++++++ tasks from mysql {}s=========='.format(tasks))
+                log.info('==============account +++++++ tasks from mysql {}s=========='.format(tasks))
+                log.info('==============account +++++++ tasks from mysql {}s=========='.format(tasks))
                 self._redis.zadd(self._account_task_key, tasks)
                 task = self.__get_task_from_redis(self._account_task_key)
 
@@ -95,6 +98,9 @@ class TaskManager():
             None
         """
         task = self.__get_task_from_redis(self._article_task_key)
+
+        log.info('==============haha get article task {}s'.format(task))
+        log.info('==============haha get article task {}s'.format(task))
         if not task:
             sql = 'select id, article_url from wechat_article_task where state = 0 limit 5000'
             tasks = self._mysqldb.find(sql)
@@ -109,6 +115,19 @@ class TaskManager():
                 tasks = self._mysqldb.find(sql)
 
             if tasks:
+                # self._redis.zadd(self._article_task_key, tasks)
+                # task = self.__get_task_from_redis(self._article_task_key)
+                log.info('==============tasks from mysql {}s=========='.format(tasks))
+                # task_json = []
+                # for article_url_task in tasks:
+                #     task_json_one = {
+                #         'article_url': article_url_task[1]
+                #     }
+                #     self._redis.zadd(self._article_task_key, task_json_one)
+                
+                
+                # task = self.__get_task_from_redis(self._article_task_key)
+
                 task_json = [
                     {
                         'article_url': article_url
@@ -217,6 +236,7 @@ class TaskManager():
                 if article_task:
                     tip = '正在抓取详情'
                     url = article_task.get('article_url')
+                    # url = article_task
                 else:
                     sleep_time = config.get('spider').get('no_task_sleep_time')
                     log.info('暂无任务 休眠 {}s'.format(sleep_time))

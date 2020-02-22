@@ -414,6 +414,9 @@ class DealData:
         """
         data = tools.get_json(text)
 
+        log.info("i'm here ===================")
+        log.info("i'm here ===================")
+        log.info("i'm here ===================")
         dynamic_data = dict(
             sn=tools.get_param(req_data, "sn"),
             __biz=tools.get_param(req_data, "__biz").replace("%3D", "="),
